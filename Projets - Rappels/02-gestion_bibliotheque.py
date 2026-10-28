@@ -12,12 +12,12 @@ bibliotheque = []
 
 # creation des fonctions
 
-def ajouter_livre(titre, auteur, editeur): 
-    """ajout d'un livre sous forme de dictionnaire dans la bibliotheque"""
-    livre = {"titre": titre, "auteur": auteur, "editeur": editeur}
-    bibliotheque.append(livre)
+def ajouter_livre(titre, auteur, editeur): 1
+"""ajout d'un livre sous forme de dictionnaire dans la bibliotheque"""
+livre = {"titre": titre, "auteur": auteur, "editeur": editeur}
+bibliotheque.append(livre)
 
-    print(f"Le livre '{titre}' a été ajouté à la bibliothèque.")
+print(f"Le livre '{titre}' a été ajouté à la bibliothèque.")
 
 def afficher_livres():
     """affiche la liste des livres dans la bibliotheque"""
@@ -81,8 +81,44 @@ def modifier_livre(titre, nouveau_titre=None, nouvel_auteur=None, nouvel_editeur
 
 # creation d'une autre fonction pour tester le code
 
+# Menu de la bibliothèque
 
-ajouter_livre("Le Petit Prince", "Antoine de Saint-Exupéry", "Gallimard")
+while True:
+    print(" MENU BIBLIOTHEQUE ")
+    print("1. Ajouter un livre")
+    print("2. Afficher les livres")
+    print("3. Emprunter un livre")
+    print("4. Retourner un livre")
+    print("5. Supprimer un livre")
+    print("6. Quitter")
 
+    choix = input("Entrez votre choix : ")
 
-afficher_livres()
+    if choix == "1":
+        titre = input("Titre du livre : ")
+        auteur = input("Auteur : ")
+        editeur = input("Editeur : ")
+        ajouter_livre(titre, auteur, editeur)
+
+    elif choix == "2":
+        afficher_livres()
+
+    elif choix == "3":
+        titre = input("Titre du livre : ")
+        emprunteur = input("Nom de l'emprunteur : ")
+        emprunter_livre(titre, emprunteur)
+
+    elif choix == "4":
+        titre = input("Titre du livre : ")
+        retourner_livre(titre)
+
+    elif choix == "5":
+        titre = input("Titre du livre : ")
+        supprimer_livre(titre)
+
+    elif choix == "6":
+        print("Au revoir !")
+        break
+
+    else:
+        print("Choix invalide. Reessayez.")
