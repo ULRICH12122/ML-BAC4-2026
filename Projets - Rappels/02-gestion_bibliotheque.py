@@ -1,88 +1,118 @@
-'''Gestion d'une petite bibliotheque'''
-'''Fonctionnalités suivantes :'''
-'''
-    - Ajout des livres
-    - Liste des livres
-    - Emprunter un livre
-    - Retourner un livre
-    - Suppresion des livres
-'''
+
+# Gestion d'une petite bibliotheque
 
 bibliotheque = []
 
-# creation des fonctions
 
-def ajouter_livre(titre, auteur, editeur): 
-    """ajout d'un livre sous forme de dictionnaire dans la bibliotheque"""
-    livre = {"titre": titre, "auteur": auteur, "editeur": editeur}
+# Fonction pour ajouter un livre
+def ajouter_livre(titre, auteur, editeur):
+    livre = {
+        "titre": titre,
+        "auteur": auteur,
+        "editeur": editeur
+    }
+
     bibliotheque.append(livre)
+    print("Livre ajoute avec succes !")
 
-    print(f"Le livre '{titre}' a été ajouté à la bibliothèque.")
 
+# Fonction pour afficher les livres
 def afficher_livres():
-    """affiche la liste des livres dans la bibliotheque"""
-    if not bibliotheque: 
-        print("La bibliothèque est vide.")
+    if len(bibliotheque) == 0:
+        print("La bibliotheque est vide.")
     else:
-        print("Liste des livres dans la bibliothèque :")
         for livre in bibliotheque:
-            statut = "Disponible" if livre.get("emprunteur") is None else f"Emprunté par {livre['emprunteur']}"
-            print(f"Titre: {livre['titre']}, Auteur: {livre['auteur']}, Editeur: {livre['editeur']}, Statut: {statut}")
+            print("--------------------")
+            print("Titre :", livre["titre"])
+            print("Auteur :", livre["auteur"])
+            print("Editeur :", livre["editeur"])
 
+            if livre.get("emprunteur") is None:
+                print("Statut : Disponible")
+            else:
+                print("Emprunte par :", livre["emprunteur"])
+
+
+# Fonction pour emprunter un livre
 def emprunter_livre(titre, emprunteur):
-    """permet l'emprunt du livre si il est disponible"""
     for livre in bibliotheque:
         if livre["titre"] == titre:
             if livre.get("emprunteur") is None:
                 livre["emprunteur"] = emprunteur
-                print(f"Le livre '{titre}' a été emprunté par {emprunteur}.")
-                return
+                print("Livre emprunte avec succes !")
             else:
-                print(f"Le livre '{titre}' est déjà emprunté par {livre['emprunteur']}.")
-                return
-    print(f"Le livre '{titre}' n'existe pas dans la bibliothèque.")
+                print("Ce livre est deja emprunte.")
+            return
 
+    print("Livre introuvable.")
+
+
+# Fonction pour retourner un livre
 def retourner_livre(titre):
-    """permet de retourner un livre emprunté"""
     for livre in bibliotheque:
         if livre["titre"] == titre:
             if livre.get("emprunteur") is not None:
-                print(f"Le livre '{titre}' a été retourné.")
                 del livre["emprunteur"]
-                return
+                print("Livre retourne avec succes !")
             else:
-                print(f"Le livre '{titre}' n'est pas emprunté.")
-                return
-    print(f"Le livre '{titre}' n'existe pas dans la bibliothèque.")
+                print("Ce livre n'est pas emprunte.")
+            return
 
+    print("Livre introuvable.")
+
+
+# Fonction pour supprimer un livre
 def supprimer_livre(titre):
-    """permet de supprimer un livre de la bibliotheque"""
     for livre in bibliotheque:
         if livre["titre"] == titre:
             bibliotheque.remove(livre)
-            print(f"Le livre '{titre}' a été supprimé de la bibliothèque.")
+            print("Livre supprime avec succes !")
             return
-    print(f"Le livre '{titre}' n'existe pas dans la bibliothèque.")
 
-def modifier_livre(titre, nouveau_titre=None, nouvel_auteur=None, nouvel_editeur=None):
-    """permet de modifier les informations d'un livre"""
-    for livre in bibliotheque:
-        if livre["titre"] == titre:
-            if nouveau_titre:
-                livre["titre"] = nouveau_titre
-            if nouvel_auteur:
-                livre["auteur"] = nouvel_auteur
-            if nouvel_editeur:
-                livre["editeur"] = nouvel_editeur
-            print(f"Le livre '{titre}' a été modifié.")
-            return
-    print(f"Le livre '{titre}' n'existe pas dans la bibliothèque.")
+    print("Livre introuvable.")
 
 
-# creation d'une autre fonction pour tester le code
+# Menu principal
+while True:
+    print("\n===== MENU BIBLIOTHEQUE =====")
+    print("1. Ajouter un livre")
+    print("2. Afficher les livres")
+    print("3. Emprunter un livre")
+    print("4. Retourner un livre")
+    print("5. Supprimer un livre")
+    print("6. Quitter")
 
+    choix = input("Entrez votre choix : ")
 
-ajouter_livre("Le Petit Prince", "Antoine de Saint-Exupéry", "Gallimard")
+    if choix == "1":
+        titre = input("Titre du livre : ")
+        auteur = input("Nom de l'auteur : ")
+        editeur = input("Nom de l'editeur : ")
 
+        ajouter_livre(titre, auteur, editeur)
 
-afficher_livres()
+    elif choix == "2":
+        afficher_livres()
+
+    elif choix == "3":
+        titre = input("Titre du livre : ")
+        emprunteur = input("Nom de l'emprunteur : ")
+
+        emprunter_livre(titre, emprunteur)
+
+    elif choix == "4":
+        titre = input("Titre du livre : ")
+
+        retourner_livre(titre)
+
+    elif choix == "5":
+        titre = input("Titre du livre : ")
+
+        supprimer_livre(titre)
+
+    elif choix == "6":
+        print("Au revoir !")
+        break
+
+    else:
+        print("Choix invalide. Reessayez.")
